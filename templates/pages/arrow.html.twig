@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class=container">
+    <div class="row d-flex mt-4 mb-4">
+        <div class="d-flex justify-content-start">
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="N° d'étude">
+            </div>
+            <div class="col-md-8 ">
+                <button class="btn btn-secondary ">Trier par</button>
+            </div>
+            <div class="col md-8 mr-4 ml-4">
+                <button class="btn btn-secondary ">{{ etude.numero }}</button>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <div class="col-md-8 mr-4 ml-4">
+                <button class="btn btn-secondary ">Gestionnaire formulaire</button>
+            </div>
+            <div class="col mr-4 ml-4">
+                <button class="btn btn-secondary ">Planning</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class= "container jumbotron d-flex justify-content-between">
+    <div class="row md-6 d-flex flex-column text-center mt-2">
+        <div class="col-sm-12">
+            <h4>N° d'étude: {{ etude.numero }}</h4>
+        </div>
+
+    </div>
+    <div class="row md-6 d-flex flex-column justify-content-lg-start mt-2">
+        <div class="col-sm-12">
+            <p>Sponsor: </p>
+            <p>Représentant sponsor: </p>
+            <p>DE: </p>
+        </div>
+    </div>
+    <div class="row md-6 d-flex flex-column justify-content-lg-start mt-2">
+        <div class="col-sm-12">
+            <p>Phase(test): </p>
+            <p>TRE: </p>
+            <p>Espèce: </p>
+        </div>
+    </div>
+</div>
+<div class                = "container">
+    <div class            = "wrapper">
+        <div class            = "arrow-steps clearfix">
+            <div class    = "step current"> <span> Informations Générales</span> </div>
+            <div class    = "step"> <span>Choix du pélèvement</span> </div>
+            <div class    = "step"> <span>Groupes+temps</span> </div>
+            <div class    = "step"> <span>Caractéristiques du prélèvement</span> </div>
+            <div class    = "step"> <span>Récapitualif</span> </div>
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+{% block title 'Etudes' %}
+{% block body %}
+    <div class="container">
+       {# {%  if app.user %}
+            <a href="{{ path('logout') }}" class="btn btn-secondary">Se deconnecter</a>
+        {%  endif %}
+        #}
+        <div class="jumbotron text-center bg-warning">
+            <div class="row d-flex ">
+                <div class="d-flex justify-content-start">
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="N° d'étude">
+                    </div>
+                    <div class="col-sm">
+                        <button class="btn btn-secondary ">Trier par</button>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <div class="col-md-8">
+                        <button class="btn btn-secondary ">Gestionnaire formulaire</button>
+                    </div>
+                    <div class="col-md">
+                        <button class="btn btn-secondary ">Planning</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-striped table-light mt-4 border border-secondary-rounded text-center">
+            <thead>
+            <tr>
+                <th></th>
+                <th><button class="btn btn-dark btn-md btn-block ">N° d'étude</button></th>
+                <th><button class="btn btn-dark btn-md btn-block ">Sponsor</button></th>
+                <th><button class="btn btn-dark btn-md btn-block">DE</button></th>
+                <th><button class="btn btn-dark btn-md btn-block">Phase(test)</button></th>
+                <th><button class="btn btn-dark btn-md btn-block">TRE</button></th>
+                <th><button class="btn btn-dark btn-md btn-block">Espèce</button></th>
+                <th><button class="btn btn-dark btn-md btn-block">Statut</button></th>
+                <th><button class="btn btn-dark btn-md btn-block">Commentaire</button></th>
+            </tr>
+            </thead>
+            <tbody>
+       {% for etude in etudes %}
+                <tr>
+                    <th scope="row"><input type="checkbox" aria-label="Checkbox for following text input"></th>
+                    <td><a href="{{ path('etude.show', {id: etude.id, slug: etude.slug}) }}">{{ etude.formattedNumero}}</a></td>
+                    <td>{{ etude.sponsor }}</td>
+                    <td>{{ etude.de }}</td>
+                    <td>{{ etude.testType }}</td>
+                    <td>{{ etude.tre }}</td>
+                    <td>{{ etude.especeAnimale }}</td>
+                    <td>{{ etude.statut }}</td>
+                    <td>{{ etude.commentaire | nl2br }}</td>
+                </tr>
+                {#<a style="text-decoration: none" target="_blank"
+                   href="{{ path('admin.produit.index', {id: etude.id}) }}">
+                    <button class="btn btn-sm btn-block btn-outline-secondary">{{ etude.numero }}</button>
+
+                </a>#}
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+
+        <div class="row d-flex align-items-end mt-5 ml-1 ">
+
+            <button class="btn btn-light">Tout</button>
+            <button class="btn btn-light">Aucun</button>
+            <button class="btn btn-secondary">Sélectionner</button>
+            <button class="btn btn-secondary">Dupliquer l'étude</button>
+            <div class="">
+         {#    <a href="{{ path('admin.etude.new') }}" class="btn btn-secondary">Ajouter une nouvelle étude</a> #}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
