@@ -26,7 +26,11 @@
                 </div>
             </div>
         </div>
-
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
         <table class="table table-striped table-light mt-4 border border-secondary-rounded text-center">
             <thead>
             <tr>
@@ -72,8 +76,9 @@
             <button class="btn btn-secondary">Sélectionner</button>
             <button class="btn btn-secondary">Dupliquer l'étude</button>
             <div class="">
-         {#    <a href="{{ path('admin.etude.new') }}" class="btn btn-secondary">Ajouter une nouvelle étude</a> #}
+             <a href="{{ path('admin.etude.new') }}" class="btn btn-secondary">Ajouter une nouvelle étude</a>
             </div>
+
         </div>
     </div>
 

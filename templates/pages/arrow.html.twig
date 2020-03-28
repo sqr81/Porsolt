@@ -34,16 +34,16 @@
     </div>
     <div class="row md-6 d-flex flex-column justify-content-lg-start mt-2">
         <div class="col-sm-12">
-            <p>Sponsor: </p>
-            <p>Représentant sponsor: </p>
-            <p>DE: </p>
+            <p>Sponsor: {{ etude.sponsor }}</p>
+            <p>Représentant sponsor: {{ etude.representantSponsor }}</p>
+            <p>DE: {{ etude.de }}</p>
         </div>
     </div>
     <div class="row md-6 d-flex flex-column justify-content-lg-start mt-2">
         <div class="col-sm-12">
-            <p>Phase(test): </p>
-            <p>TRE: </p>
-            <p>Espèce: </p>
+            <p>Phase(test): {{ etude.testType }}</p>
+            <p>TRE: {{ etude.tre }}</p>
+            <p>Espèce: {{ etude.especeAnimale }}</p>
         </div>
     </div>
 </div>
