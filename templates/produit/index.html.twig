@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block title '' %}
+ {% for produit in produits %}
+     <tr>
+         <td><a href="{{ path('produit.show', {id: produit.id, slug: produit.slug}) }}">{{ produit.formattedNumero}}</a></td>
+         <td>{{ produit.groupe }}</td>
+         <td>{{ produit.groupe }}</td>
+         <td>{{ produit.groupe }}</td>
+         <td>{{ produit.groupe }}</td>
+         <td>{{ produit.groupe }}</td>
+     </tr>
+ {% endfor %}

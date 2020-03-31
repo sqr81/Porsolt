@@ -313,4 +313,10 @@ class Etude
     {
         return number_format($this->numero,0, '', ' ' );
     }
+
+    public function __toString()
+    {
+        return $this->numero;
+
+    }
 }

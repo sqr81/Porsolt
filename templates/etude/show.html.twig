@@ -15,32 +15,33 @@
         </tr>
         </thead>
         <tbody>
-        <div class="container">
+        {#<div class="container">
             <div class="row flex">
-
+                {{ include ('admin/produit/index.html.twig') }}
             </div>
-        </div>
-        <tr>
+        </div>#}
 
-        </tr>
         </tbody>
     </table>
 
-
     <div class="container d-flex mt-5" >
-        <button class="btn btn-light mr-1">Tout</button>
-        <button class="btn btn-light mr-1">Aucun</button>
-        <a href="#" class="btn btn-primary mr-1">Suivant</a>
-        {#<a href="{{ path('admin.produit.new') }}" class="btn btn-secondary">Creer</a>#}
-        {#<a href="{{  path('admin.produit.edit', {id: produit.id}) }}" class="btn btn-primary">Nouveau groupe</a>#}
+        <div class="row d-md-">
+            <div class="col md-8">
+                <button class="btn btn-light mr-1">Tout</button>
+                <button class="btn btn-light mr-1">Aucun</button>
+                <a href="#" class="btn btn-primary mr-1">Suivant</a>
+                {#<a href="{{ path('admin.produit.new') }}" class="btn btn-secondary">Creer</a>#}
+                {#<a href="{{  path('admin.produit.edit', {id: produit.id}) }}" class="btn btn-primary">Nouveau groupe</a>#}
+            </div>
+            <div class="col-md-4">
+                <form method="post" action="{{ path('admin.etude.delete', {id: etude.id}) }}" style="display:inline-block" onsubmit="return confirm('Êtes vous sûr?')">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ etude.id) }}">
+                    <button class="btn btn-danger mr-1">Supprimer</button>
+                </form>
+            </div>
 
-
-        <form method="post" action="{{ path('admin.etude.delete', {id: etude.id}) }}" style="display:inline-block" onsubmit="return confirm('Êtes vous sûr?')">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ etude.id) }}">
-            <button class="btn btn-danger mr-1">Supprimer</button>
-        </form>
-
+        </div>
     </div>
 
 

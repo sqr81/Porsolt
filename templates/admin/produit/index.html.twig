@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table class="table table-striped table-light mt-4 border border-secondary-rounded text-center">
+        <thead>
+        <tr>
+            <th><button class="btn btn-dark btn-md btn-block ">Groupes</button></th>
+            <th><button class="btn btn-dark btn-md btn-block">Id Substance</button></th>
+            <th><button class="btn btn-dark btn-md btn-block">Nb test item</button></th>
+            <th><button class="btn btn-dark btn-md btn-block">Voie admin</button></th>
+            <th><button class="btn btn-dark btn-md btn-block">Date 1er prélèvement</button></th>
+            {#<th><a href="{{  path('admin.produit.edit', {id: produit.id}) }}" class="btn btn-dark btn-md btn-block">Nb test item</a></th>#}
+        </tr>
+        </thead>
+        <tbody>
+        {#<div class="container">
+            <div class="row flex">
+                {{ include ('produit/_form.html.twig', {button: 'Editer'}) }}
+            </div>
+        </div>#}
+        {% for produit in produits %}
+            <tr>
+                {#<td><a href="{{ path('produit.show', {id: produit.id, slug: produit.slug}) }}">{{ produit.formattedNumero}}</a></td>#}
+                <td>{{ produit.groupe }}</td>
+                <td>{{ produit.idProduitPorsolt }}</td>
+                <td>{{ produit.nbreAnimaux }}</td>
+                <td>{{ produit.voieAdmin }}</td>
+                <td>{{ produit.datePremierPrelevement|date("d/m/Y") }}</td>
+                <td><a href="{{ path('admin.produit.edit', {id: produit.id}) }}" class="btn btn-secondary">Editer</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-right">
+        <a href="{{ path('admin.produit.new') }}" class="btn btn-primary">nouveau produit</a>
+    </div>
+{% endblock %}
+

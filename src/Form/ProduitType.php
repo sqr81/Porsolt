@@ -2,27 +2,23 @@
 
 namespace App\Form;
 
-use App\Entity\Etude;
+use App\Entity\Produit;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EtudeType extends AbstractType
+class ProduitType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sponsor')
-            ->add('testType')
-            ->add('de')
-            ->add('representantSponsor')
-            ->add('tre')
-            ->add('commercial')
-            ->add('especeAnimale')
-            ->add('statut')
+            ->add('idProduitPorsolt')
+            ->add('groupe')
+            ->add('nbreAnimaux')
+            ->add('voieAdmin')
+            ->add('datePremierPrelevement')
             ->add('commentaire')
-            ->add('numero')
+            ->add('etude')
 
         ;
     }
@@ -30,9 +26,8 @@ class EtudeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Etude::class,
+            'data_class' => Produit::class,
         ]);
     }
-
 
 }
