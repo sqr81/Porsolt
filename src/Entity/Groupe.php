@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -54,6 +55,11 @@ class Groupe
     public function getIntitule(): ?string
     {
         return $this->intitule;
+    }
+
+    public function getSlug(): string
+    {
+        return (new Slugify())-> slugify($this->intitule);
     }
 
     public function setIntitule(string $intitule): self
@@ -122,4 +128,6 @@ class Groupe
 
         return $this;
     }
+
+
 }

@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller\Admin;
 
+use App\Entity\Etude;
+use App\Entity\Groupe;
 use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
@@ -28,13 +30,14 @@ class AdminProduitController extends AbstractController
     }
 
     /**
-     * @Route("/admin/etude", name="admin.produit.index")
+     * @Route("/admin/produit", name="admin.produit.index")
      * @return Response
      */
     public function index()
     {
         $produits = $this->repository->findAll();
         return $this->render('admin/produit/index.html.twig', compact('produits'));
+
     }
 
     /**
@@ -45,6 +48,7 @@ class AdminProduitController extends AbstractController
     public function new(Request $request)
     {
         $produit= new Produit();
+
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
@@ -63,10 +67,11 @@ class AdminProduitController extends AbstractController
     /**
      * @Route("/admin/produit/{id}", name="admin.produit.edit")
      * @param Produit $produit
+     * @param Etude $etude
      * @param Request $request
      * @return Response
      */
-    public function edit(Produit $produit, Request $request)
+    public function edit(Produit $produit, Etude $etude, Request $request)
     {
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
@@ -77,6 +82,7 @@ class AdminProduitController extends AbstractController
         }
         return $this->render('admin/produit/edit.html.twig', [
             'produit' => $produit,
+            'etude' => $etude,
             'form' => $form->createView()
         ]);
     }

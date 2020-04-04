@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -89,6 +90,11 @@ class Produit
     public function getGroupe(): ?string
     {
         return $this->groupe;
+    }
+
+    public function getSlug(): string
+    {
+        return (new Slugify())-> slugify($this->groupe);
     }
 
     public function setGroupe(string $groupe): self
@@ -201,6 +207,10 @@ class Produit
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->idProduitPorsolt;
 
+    }
 
 }

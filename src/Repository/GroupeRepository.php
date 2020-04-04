@@ -19,6 +19,19 @@ class GroupeRepository extends ServiceEntityRepository
         parent::__construct($registry, Groupe::class);
     }
 
+    /**
+     * @return Groupe[]
+     */
+    public function findLatest(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults(50)
+            ->getQuery()
+            ->getResult();
+    }
+
+
     // /**
     //  * @return Groupe[] Returns an array of Groupe objects
     //  */
