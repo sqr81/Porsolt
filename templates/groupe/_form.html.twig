@@ -1,13 +1,20 @@
+<div class="container d-inline-block">
 {{ form_start(form) }}
-<table class="table table-striped table-light mt-4 border border-secondary-rounded text-center">
+<table class="table table-striped table-light mt-4 border border-secondary-rounded d-flex justify-content-between">
     <thead>
         <tr>
-            <th>{{ form_row(form.idAnimalPorsolt ) }}</th>
-            <th>{{ form_row(form.nomUsuel) }}</th>
-            <th>{{ form_row(form.puce) }}</th>
+            <th><div class="col-md-8">{{ form_row(form.idAnimalPorsolt) }}</div></th>
         </tr>
+        <tr>
+            <th><div class="col-md-8">{{ form_row(form.nomUsuel) }}</div></th>
+
+        </tr>
+    <tr>
+        <th><div class="col-md-8">{{ form_row(form.puce) }}</div></th>
+    </tr>
     </thead>
 </table>
 <button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
 
 {{ form_end(form) }}
+</div>

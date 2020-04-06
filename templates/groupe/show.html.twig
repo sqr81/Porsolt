@@ -19,12 +19,12 @@
         </thead>
         <tbody>
 
-
         <tr>
 
             <td>{{ produit.groupe }}</td>
             <td>{{ produit.idProduitPorsolt }}</td>
                 <td>
+
                     {% for groupe in groupes %}
                     {{ groupe.idAnimalPorsolt }}
                     {%  endfor %}

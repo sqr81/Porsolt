@@ -1,12 +1,9 @@
 <?php
 namespace App\Controller\Admin;
-
 use App\Entity\Groupe;
-
 use App\Entity\Produit;
 use App\Form\GroupeType;
 use App\Repository\GroupeRepository;
-
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

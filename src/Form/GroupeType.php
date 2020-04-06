@@ -12,12 +12,12 @@ class GroupeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('intitule')
-            ->add('nbreAnimaux')
+
+
             ->add('idAnimalPorsolt')
             ->add('nomUsuel')
             ->add('puce')
-            ->add('produit')
+
         ;
     }
 

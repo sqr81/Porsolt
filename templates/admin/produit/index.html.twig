@@ -10,6 +10,7 @@
                 {{ include ('produit/_form.html.twig', {button: 'Editer'}) }}
             </div>
         </div>#}
+
         {% for produit in produits %}
             <tr>
                 <td><a href="{{ path('groupe.show', {id: produit.id, slug: produit.slug}) }}">{{ produit.groupe }}</a></td>
