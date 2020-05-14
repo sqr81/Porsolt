@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title 'Create_etude' %}
+{% block body %}
+
+
+    <div class="container mt-4">
+        <div class="jumbotron text-center">
+            <div class="container mb-5">
+                <h1>Créer une étude</h1>
+            </div>
+            {{ include ('/etude/_form.html.twig', {button: 'Créer'}) }}
+        </div>
+    </div>
+
+{% endblock %}

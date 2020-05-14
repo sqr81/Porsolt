@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for etude in etudes %}
+    <tr>
+
+            <td>{{ etude.numero }}</td>
+
+    </tr>
+    <tr>
+        {{ dump(etude) }}
+        {% for produit in etude.produits %}
+            <td>{{ produit.groupe}}</td>
+            <td>{{ produit.voieAdmin }}</td>
+            <td>{{ produit.idProduitPorsolt }}</td>
+            <td>{{ produit.nbreAnimaux }}</td>
+            <td>{{ produit.datePremierPrelevement | date("d/m/Y") }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+{% endblock %}
+
+
+

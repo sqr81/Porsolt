@@ -1,0 +1,29 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.numero ) }}</div>
+    <div class="col-md-6">{{ form_row(form.sponsor) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.testType) }}</div>
+    <div class="col-md-6">{{ form_row(form.de) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-12">{{ form_row(form.representantSponsor) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-12">{{ form_row(form.commercial) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.tre) }}</div>
+    <div class="col-md-6">{{ form_row(form.especeAnimale) }}</div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">{{ form_row(form.statut) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-12">   {{ form_row(form.commentaire) }}</div>
+</div>
+<button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+
+{{ form_end(form) }}

@@ -1,0 +1,46 @@
+<div class="container d-inline-block">
+{{ form_start(form) }}
+<table class="table table-striped table-light mt-4 border border-secondary-rounded d-flex justify-content-between">
+    <thead>
+        <tr>
+            <th><div class="col-md-6 p-4">{{ form_row (form.idAnimalPorsolt) }}</div></th>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </tr>
+        <tr>
+            <th><div class="col-md-8 p-4">{{ form_row (form.nomUsuel) }}</div></th>
+
+        </tr>
+    <tr>
+        <th><div class="col-md-8 p-4">{{ form_row (form.puce) }}</div></th>
+    </tr>
+
+    </thead>
+</table>
+<button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+
+{{ form_end(form) }}
+</div>
+
+
+{#<script>#}
+{#    function validateForm()#}
+{#    {#}
+{#        var name = document.forms["myForm"]["name"];#}
+{#        if (name.value == ""){#}
+{#            document.getElementById('errorname').innerHTML="Veuillez entrez un nom valide";#}
+{#            name.focus();#}
+{#            return false;#}
+{#        }else{#}
+{#            document.getElementById('errorname').innerHTML="";#}
+{#        }#}
+{#    }#}
+{#</script>#}
+{#<form name="myForm" onsubmit="return validateForm()">#}
+{#    <p>Votre nom: <input type="text" name="name" class="field-long"/>  <span class="error" id="errorname"></span></p>#}
+{#    <p><input type="submit" value="Envoyer"></p>#}
+{#</form>#}
+

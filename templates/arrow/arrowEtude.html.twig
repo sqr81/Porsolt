@@ -1,0 +1,66 @@
+{% block body %}
+<div class=container">
+
+    <div class="nav row d-flex mt-4 mb-4">
+            <div class="col-md-2">
+                <label for="formGroupExampleInput"></label><input type="text" class="form-control" id="formGroupExampleInput" placeholder="N° d'étude">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-secondary ">Trier par</button>
+            </div>
+            <div class="col md-2 mr-4 ml-4">
+            <a href="{{ path('etude.show', {id: etude.id, slug: etude.slug}) }}" class="btn btn-secondary mr-1">{{ etude.numero }}</a>
+               
+            </div>
+            <div class="col-md-2 ml-4">
+                <button class="btn btn-secondary ">Gestionnaire formulaire</button>
+            </div>
+            <div class="col md-2 mr-4">
+                <button class="btn btn-secondary ">Planning</button>
+            </div>
+            <div class="  col md-2 ">
+                <a class="btn btn-outline-primary" href="{{ path('etude.index') }}"><span class="glyphicon glyphicon-home"></span></a>
+                <a class="btn btn-outline-primary" href="#"><span class="glyphicon glyphicon-print"></span></a>
+                <a class="btn btn-outline-primary" href="#"><span class="glyphicon glyphicon-cog"></span></a>
+            </div>
+    </div>
+</div>
+<div class= "container jumbotron d-flex justify-content-between">
+    <div class="logoPorsolt">
+        <img class="fit-picture" src="{{asset('build/images/porsolt.png')}}"
+             alt="Porsolt logo">
+    </div>
+    <div class="row md-6 d-flex flex-column text-center mt-2">
+        <div class="col-sm-12">
+            <h4>N° d'étude: {{ etude.numero }}</h4>
+        </div>
+
+    </div>
+    <div class="row md-6 d-flex flex-column justify-content-lg-start mt-2">
+        <div class="col-sm-12">
+            <p>Sponsor: {{ etude.sponsor }}</p>
+            <p>Représentant sponsor: {{ etude.representantSponsor }}</p>
+            <p>DE: {{ etude.de }}</p>
+        </div>
+    </div>
+    <div class="row md-6 d-flex flex-column justify-content-lg-start mt-2">
+        <div class="col-sm-12">
+            <p>Phase(test): {{ etude.testType }}</p>
+            <p>TRE: {{ etude.tre }}</p>
+            <p>Espèce: {{ etude.especeAnimale }}</p>
+        </div>
+    </div>
+</div>
+<div class                = "progression container d-flex justify-content-center">
+    <div class            = "wrapper">
+        <div class            = "arrow-steps clearfix">
+            <div class    = "step current"> <span> Informations Générales</span> </div>
+            <div class    = "step"> <span>Choix du pélèvement</span> </div>
+            <div class    = "step"> <span>Groupes+temps</span> </div>
+            <div class    = "step"> <span>Caractéristiques du prélèvement</span> </div>
+            <div class    = "step"> <span>Récapitualif</span> </div>
+        </div>
+    </div>
+
+{% endblock %}
+

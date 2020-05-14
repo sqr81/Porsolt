@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+{% block title 'Create Groupe' %}
+{% block body %}
+
+    <div class="container mt-4">
+        <div class="jumbotron text-center">
+                <div class="container mb-5">
+                    <h1>Créer un groupe</h1>
+                </div>
+                    
+            {{ include ('groupe/_form.html.twig', {button:'créer'}) }}
+           
+        </div>
+    </div>
+{% endblock %}
