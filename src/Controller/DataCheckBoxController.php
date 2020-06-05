@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\Entity\Etude;
 use App\Repository\ProduitRepository;
 use App\Repository\TempsPrelevementRepository;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

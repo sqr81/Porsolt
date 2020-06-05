@@ -132,4 +132,10 @@ class TempsPrelevement
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->tempsPrelevement;
+
+    }
 }

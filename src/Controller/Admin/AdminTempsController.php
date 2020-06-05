@@ -73,7 +73,7 @@ class AdminTempsController extends AbstractController
 
 
 
-//        $quest = $request->request->all();
+
 //
 //        foreach($quest as $prop=>$qst){
 //            $reponse= new Reponse();
@@ -83,13 +83,14 @@ class AdminTempsController extends AbstractController
 //            $manager->persist($reponse);
 //            $manager->flush();
 
-        foreach ($tempss as $produits => $qst) {
-            $dataCheckBox = new ();
-            $dataCheckBox->setDataCheckBox((array)$qst);
-//            $reponse->setIdProposition($prop);
-            dump($dataCheckBox);
-            die();
-            $em->persist($dataCheckBox);
+
+        foreach ($tempss as $dataCheckBox => $qst) {
+            $temps = new TempsPrelevement();
+            $temps->setDataCheckBox((array)$qst);
+            $temps->setTempsPrelevement($dataCheckBox);
+//            dump($qst);
+//            die();
+            $em->persist($qst);
             $em->flush();
         }
 
@@ -236,14 +237,14 @@ class AdminTempsController extends AbstractController
         $em->flush();
 
 
-        return new Response('suppression effectuée');
+//        return new Response('suppression effectuée');
 
 
-
-//        return $this->redirectToRoute('temps.index', [
-//            'id' => $etude->getId(),
-//            'slug' => $etude->getSlug()
-//        ], 301);
+        $etude = $_GET->$this;
+        return $this->redirectToRoute('temps.index', [
+            'id' => $etude->getId(),
+            'slug' => $etude->getSlug()
+        ], 301);
     }
 
 
