@@ -46,7 +46,7 @@
                     <td><a href="{{ path('temps.show', {id: produit.id, slug: produit.slug}) }}">{{ produit.groupe }}</a></td>
                         {% for temps in tempss %}
                         <form method="post" action="{{ path('temps.index', {id: etude.id, slug: etude.slug}) }}">
-                            <td><input type="checkbox" name="dataCheckBox[]" value ="{{temps.dataCheckBox}}" class="form-check-input" id="exampleCheck1">
+                            <td><input type="checkbox" name="dataCheckBox[]" value ="{{temps.id}}" class="form-check-input" id="exampleCheck1">
                                 <label class="form-check-label" for="exampleCheck1"></label>
                                 <input type="submit" name="btn_envoi" value="envoyer">
                             </td>
@@ -147,13 +147,7 @@
 
 
 
-{% for temps in tempss %}
-    <form method="post" action="{{ path('temps.index', {id: etude.id, slug: etude.slug}) }}">
-        <td><input type="checkbox" name="dataCheckBox[]" value ="{{temps.id}}" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1"></label>
-            <input type="submit" name="btn_envoi" value="envoyer">
-        </td>{%  endfor %}
-    </form>
+
 {% endblock %}
 
 
