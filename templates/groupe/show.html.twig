@@ -44,11 +44,11 @@
                 <button class="btn btn-light mr-1">Tout</button>
                 <button class="btn btn-light mr-1">Aucun</button>
                 <a href="{{ path('prelevement.index', {id: etude.id, slug: etude.slug}) }}" class="btn btn-primary mr-1">Suivant</a>
-                {#<a href="{{ path('admin.produit.new') }}" class="btn btn-secondary">Creer</a>#}
-                {#<a href="{{  path('admin.produit.edit', {id: produit.id}) }}" class="btn btn-primary">Nouveau groupe</a>#}
+{#                <a href="{{ path('prelevement.index', {id: produit.id, slug: produit.slug}) }}" class="btn btn-primary mr-1">Suivant</a>#}
+
             </div>
             <div class="">
-                <a href="{{ path('admin.groupe.new') }}" class="btn btn-primary">Créer un groupe</a>
+                <a href="{{ path('admin.groupe.new', {id: produit.id}) }}" class="btn btn-primary">Créer un groupe</a>
             </div>
 
         </div>

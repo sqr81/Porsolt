@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+{% block title 'créer prélèvement' %}
+{% block body %}
+
+    <div class="container mt-4">
+        <div class="jumbotron text-center">
+            <div class="container mb-5">
+                <h1>Créer prélèvement</h1>
+            </div>
+
+            {{ include ('prelevement/_form.html.twig', {button:'créer'}) }}
+
+        </div>
+    </div>
+{% endblock %}

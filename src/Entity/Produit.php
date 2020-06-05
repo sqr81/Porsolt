@@ -21,22 +21,22 @@ class Produit
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $idProduitPorsolt;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      */
     private $groupe;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
      */
     private $nbreAnimaux;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $voieAdmin;
 
@@ -61,7 +61,7 @@ class Produit
     private $phase;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="produit", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="produit", orphanRemoval=true,)
      */
     private $groupes;
 

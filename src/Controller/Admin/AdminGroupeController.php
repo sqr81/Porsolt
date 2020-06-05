@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 use App\Entity\Etude;
 use App\Entity\Groupe;
 use App\Entity\Produit;
+use App\Form\EtudeType;
+use App\Form\FicheAnimalType;
 use App\Form\GroupeType;
 use App\Repository\EtudeRepository;
 use App\Repository\GroupeRepository;
@@ -29,9 +31,15 @@ class AdminGroupeController extends AbstractController
      * @param EntityManagerInterface
      */
     private $em;
+    /**
+     * @var ProduitRepository
+     */
+    private $produitRepository;
+    private $getDoctrine;
 
-    public function __construct(GroupeRepository $repository, EntityManagerInterface $em)
+    public function __construct(GroupeRepository $repository, EntityManagerInterface $em, ProduitRepository $produitRepository)
     {
+        $this->produitRepository = $produitRepository;
         $this->repository = $repository;
         $this->em=$em;
     }
@@ -152,50 +160,104 @@ class AdminGroupeController extends AbstractController
     }
 
     /**
-     * @Route("/admin/groupe/new", name="admin.groupe.new")
+     * @Route("/admin/{id}/groupe/new/", name="admin.groupe.new")
      * @param Request $request
+     * @param Produit $produit
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function new(Request $request)
+    public function new(Request $request, Produit $produit)
     {
         $groupe = new Groupe();
-        $form = $this->createForm(GroupeType::class, $groupe);
+        $form = $this->createForm(FicheAnimalType::class, $groupe);
         $form->handleRequest($request);
-
-
-
         if($form->isSubmitted() && $form->isValid()) {
-            $produit = $this->getDoctrine()->getManager()->getRepository('App:Produit')->find($request->request->get('groupe')['groupeId']);
-
-//            dump($produit);
-//            die();
-            $nom=$form['idAnimalPorsolt']->getData();       /*comparaison groupe avec produit*/
-            if ($this->groupeNameExist($produit, $nom)){
-//                dump($groupe, $produit);
-//                die();
-                $this->addFlash('success', 'Id animal Porsolt déjà éxistant');
-                                       /*message error + return */
-                return $this->render('admin/groupe/new.html.twig',[
-                    'groupe' => $groupe,
-                    'form' => $form->createView()
-                ]);
-
+            $idAnimalPorsoltToCompare = $form->get('idAnimalPorsolt')->getData();
+            if ($this->groupeNameExist($produit, $idAnimalPorsoltToCompare))  /*fiche animale unique dans produit*/
+            {
+                $this->addFlash('danger', 'Id animal Porsolt déjà éxistant');
+                return $this->redirectToRoute('groupe.show', [
+                    'id' => $produit->getId(),
+                    'slug' => $produit->getSlug(),
+                ], 301);
             }
-
             $groupe->setProduit($produit);
+            $groupe->setIntitule($produit->getGroupe());
             $this->em->persist($groupe);
             $this->em->flush();
-
             return $this->redirectToRoute('groupe.show', [
                 'id' => $produit->getId(),
                 'slug' => $produit->getSlug(),
             ], 301);
         }
         return $this->render('admin/groupe/new.html.twig',[
+            'id' => $produit->getId(),
+            'slug' => $produit->getSlug(),
+            'produit' => $produit,
             'groupe' => $groupe,
             'form' => $form->createView()
         ]);
     }
+
+//    /**
+//     * @Route("/admin/groupe/new/", name="admin.groupe.new")
+//     * @param Request $request
+//     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+//     */
+//    public function new(Request $request)
+//    {
+//        //recup produit
+////        $groupe = new Groupe();
+////        $groupe->setProduit($produit);
+//
+////         recup groupe en fonction etude
+//        $em = $this->getDoctrine()->getManager();
+//        $etudeId =  $this->getId();
+//        $options = array('etudeId' => $etudeId);
+//
+////        $repo = $this->getDoctrine()->getRepository(Produit::class);
+////        $produit = $repo->find($id);
+////        $groupe->setProduit($produit);
+//
+//
+//        $etude = new Etude();
+//        $groupe = new Groupe();
+//        $form = $this->createForm(GroupeType::class, $groupe);// $options pour recup groupe en fonction etude
+//        $form->handleRequest($request);
+//
+//        if($form->isSubmitted() && $form->isValid()) {
+//            $produit = $this->getDoctrine()->getManager()->getRepository('App:Produit')->find($request->request->get('groupe')['groupeId']);
+//
+//            /*comparaison groupe avec produit*/
+//            $nom=$form['idAnimalPorsolt']->getData();
+//            if ($this->groupeNameExist($produit, $nom)){
+//                /*message error + return */
+//                $this->addFlash('danger', 'Id animal Porsolt déjà éxistant');
+//
+//                return $this->render('admin/groupe/new.html.twig',[
+//                    'groupe' => $groupe,
+//                    'form' => $form->createView()
+//                ]);
+//
+//            }
+//
+//            $groupe->setProduit($produit);
+//            $this->em->persist($groupe);
+//            $this->em->flush();
+//
+//            return $this->redirectToRoute('groupe.show', [
+//                'id' => $produit->getId(),
+//                'slug' => $produit->getSlug(),
+//            ], 301);
+//        }
+//        $produit = new Produit();
+//
+//        return $this->render('admin/groupe/new.html.twig',[
+////            'id' => $produit->getId(),
+//            'produit' => $produit,
+//            'groupe' => $groupe,
+//            'form' => $form->createView()
+//        ]);
+//    }
 
     /**
      * fonction pour comparer un groupe avec un  produit existant
@@ -210,6 +272,10 @@ class AdminGroupeController extends AbstractController
                 return true;
             }
         }
+    }
+
+    private function getId()  //         recup groupe en fonction etude
+    {
     }
 
 }

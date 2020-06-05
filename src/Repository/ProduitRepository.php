@@ -21,6 +21,23 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
+
+
+//    public function getProduitByEtude($etudeId)
+//    {
+//        $qb = $this
+//            ->createQueryBuilder('u')
+//            ->select('i')
+//            ->from('App\Entity:Produit', 'i')
+//            ->where('i.etude =  :etudeId' )
+//            ->setParameter('etudeId', $etudeId)
+//        ;
+//
+//
+//        return $qb;
+//    }
+
+
     // /**
     //  * @return Produit[] Returns an array of Produit objects
     //  */

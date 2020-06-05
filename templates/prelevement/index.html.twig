@@ -2,89 +2,69 @@
 
 {% block title 'Groupe' %}
 
-
-
 {% block body %}
-
-
+    <style>     {#  oranisation cartouche prelevement   #}
+        #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+        #sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
+        html>body #sortable li { height: 1.5em; line-height: 1.2em; }
+        .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+    </style>
 
 <article>
-
     <div class="container">
-
         {% include '/arrow/arrowPrelevement.html.twig' %}
-
     </div>
-
     <div class ="container pt-5">
-
-
-
         <div class="row md-8">
-
-            <div class="dropper" style="width: 80%; height: 370px;"></div>
-
-
-
-            <div class="draggableContainer col md-4  border-left border-primary" style="height: 370px;">
-
-                <div class="dropper">
-
-
-
-                    <div class="draggable " draggable="true"><button class="btn btn-primary btn-md  btn-block m-1">Sang</button></div>
-
-                    <div class="draggable " draggable="true"><button class="btn btn-primary btn-md  btn-block m-1">CSF</button></div>
-
-                    <div class="draggable " draggable="true"><button class="btn btn-primary btn-md  btn-block m-1">Cerveau</button></div>
-
-                    <div class="draggable " draggable="true"><button class="btn btn-primary btn-md  btn-block m-1">Foie</button></div>
-
-                    <div class="draggable " draggable="true"><button class="btn btn-primary btn-md  btn-block m-1">Coeur</button></div>
-
-                    <div class="draggable " draggable="true"><button class="btn btn-primary btn-md  btn-block m-1">Formulations</button></div>
-
-                    <div class="draggable " draggable="true"><button class="btn btn-primary btn-md  btn-block m-1">Urine</button></div>
-
-                    <div class="draggable " draggable="true"><button class="btn btn-primary btn-md  btn-block m-1">Fécès</button></div>
-
-                    <div class="draggable " draggable="true"><button class="btn btn-primary btn-md  btn-block m-1">Autres</button></div>
-
-
-
+            <div class="dropper " style="width: 80%; height: 470px;"></div>
+            <div class="draggableContainer col md-4  border-left border-primary" >
+                <div class="dropper" style=" height: 100%">
+                    {% for prelevement in prelevements %}
+                        <div class="draggable " draggable="true">
+{#                            <ul id="sortable">#}
+{#                                <li class="ui-state-default">Item 1</li>#}
+{#                                <li class="ui-state-default">Item 2</li>#}
+{#                            </ul>#}
+                            <button  type="submit" class="btn btn-primary btn-md  btn-block m-1">
+                                <span class="infobulledefinition " title="glisser et cliquer pour Créer">{{ prelevement.typePrelevement }}</span>
+                            </button>
+                        </div>
+                    {%  endfor %}
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
     <div class="container d-flex mt-5" >
 
         <div class="row d-md-">
-
+            <div class="column">
+                <div class="portlet">
+                    <div class="portlet-header">nouveau prélèvement</div>
+                    <div class="portlet-content">{{ include ('prelevement/_form.html.twig', {button:'créer'}) }}</div>
+                </div>
+            </div>
             <div class="col md-8">
-
                 <button class="btn btn-light mr-1">Tout</button>
-
                 <button class="btn btn-light mr-1">Aucun</button>
-
                 <a href="{{ path('temps.index', {id: etude.id, slug: etude.slug}) }}" class="btn btn-primary mr-1">Suivant</a>
-
                 {#<a href="{{ path('admin.produit.new') }}" class="btn btn-secondary">Creer</a>#}
-
                 {#<a href="{{  path('admin.produit.edit', {id: produit.id}) }}" class="btn btn-primary">Nouveau groupe</a>#}
-
             </div>
 
         </div>
-
-    </div>
-
 </article>
 
-    <script>{#drap & drop#}
+    <script>
+        $( function() {
+            $( "#sortable" ).sortable({
+                placeholder: "ui-state-highlight"
+            });
+            $( "#sortable" ).disableSelection();
+        } );
+    </script>
+
+
+    <script>                                {#------------drap & drop----------#}
 
         document.querySelector('.dropper').addEventListener('dragover', function(e) {
 
@@ -236,9 +216,51 @@
 
 
 
+                        // info bulle
 
+        document.addEventListener("readystatechange", function (evt) {
+            if (document.readyState == "interactive") {
+                /* Trouver et parcourir tous les éléments de classe infobulle */
+                var elts = document.getElementsByClassName("infobulle");
+                for (var i = 0; i < elts.length; i++) {
+                    elts[i].dataset.bulleId = ""; /* Transformer l'attribut title en dataset title */
+                    elts[i].dataset.title = elts[i].getAttribute("title");
+                    elts[i].setAttribute("title",
+                        ""); /* Ajouter le gestionnaire d'événement sur le mouseenter */
+                    elts[i].addEventListener("mouseenter",
+                        showBulle); /* Ajouter le gestionnaire d'événement sur le mouseleave */
+                    elts[i].addEventListener("mouseleave", hideBulle);
+                }
+            }
+        });
 
-
+        /* Fonction de création et d'affichage d'une infobulle */
+        function showBulle(evt) {
+            var elt = evt.target; /* Création de la bulle si elle n'existe pas déjà */
+            if (elt.dataset.bulleId != "") {
+                return false;
+            }
+            var bulle = document.createElement("div");
+            var id = "IB" + new Date().getTime();
+            bulle.setAttribute("id", id);
+            bulle.className = "infobulleJS infobulleAnimateIn";
+            bulle.innerHTML = elt.dataset.title; /* Positionnement de la bulle */
+            var rect = elt.getBoundingClientRect();
+            bulle.style.top = rect.top + rect.height + 5 + window.scrollY;
+            bulle.style.left = rect.left + Math.round(rect.width / 2) + window
+                .scrollX; /* Enregistrement de l'id de la bulle dans dataset */
+            elt.dataset.bulleId = id; /* Ajout de la bulle sur le document */
+            document.body.appendChild(bulle);
+        } /* Fonction de suppression d'une infobulle */
+        function hideBulle(evt) {
+            var bulle = document.getElementById(evt.target.dataset.bulleId);
+            var elt = evt.target;
+            bulle.className = "infobulleJS infobulleAnimateOut";
+            setTimeout(function () {
+                document.body.removeChild(bulle);
+                elt.dataset.bulleId = "";
+            }, 400);
+        }
 
     </script>
 
