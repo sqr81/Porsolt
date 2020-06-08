@@ -44,6 +44,10 @@ class AdminTempsController extends AbstractController
      * @var ProduitRepository
      */
     private $repository;
+    /**
+     * @var Produit
+     */
+    private $produit;
 
 
     /**
@@ -84,17 +88,11 @@ class AdminTempsController extends AbstractController
 //            $manager->flush();
 
 
-        foreach ($tempss as $dataCheckBox => $qst) {
-            $temps = new TempsPrelevement();
-            $temps->setDataCheckBox((array)$qst);
-            $temps->setTempsPrelevement($dataCheckBox);
-            dump($qst);
-//            die();
-            $em->persist($qst);
-            $em->flush();
-        }
+
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
 
             $this->em->persist($temps);
             $this->em->flush();
@@ -150,6 +148,29 @@ class AdminTempsController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/temps/index/{slug}-{id}/{produit}/insert", name="dataCheckBox.insert", requirements={"slug": "[a-z0-9\-]*"})
+     * @param string $slug
+     * @param Etude $etude
+     * @param Produit $produit
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function dataCheckBoxInsert(string $slug, Etude $etude, Produit $produit, Request $request,EntityManagerInterface $em): Response
+    {
+        dump($request->request);
+//        foreach ($tempss as $dataCheckBox => $qst) {
+//            $temps = new TempsPrelevement();
+//            $temps->setProduit($produit);
+
+//            dump($qst);
+        die('salut');
+//            $em->persist($temps);
+//            $em->flush();
+//        }
+//        $this->redirectToRoute()
+    }
 //    /**
 //     * @Route("/temps/index/{slug}-{id}", name="temps.new", requirements={"slug": "[a-z0-9\-]*"})
 //     * @param Request $request

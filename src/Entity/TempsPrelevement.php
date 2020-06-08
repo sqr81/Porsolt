@@ -38,11 +38,17 @@ class TempsPrelevement
      */
     private $dataCheckBox = [];
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Produit", inversedBy="tempsPrelevements")
+     */
+    private $produit;
+
     public function __construct()
     {
         $this->prelevements = new ArrayCollection();
         $this->groupes = new ArrayCollection();
         $this->dataCheckBox = new ArrayCollection();
+        $this->produit = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -122,6 +128,35 @@ class TempsPrelevement
     }
 
     public function getDataCheckBox(): ArrayCollection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     {
         return $this->dataCheckBox;
     }
@@ -137,5 +172,31 @@ class TempsPrelevement
     {
         return $this->tempsPrelevement;
 
+    }
+
+    /**
+     * @return Collection|Produit[]
+     */
+    public function getProduit(): Collection
+    {
+        return $this->produit;
+    }
+
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->produit->contains($produit)) {
+            $this->produit[] = $produit;
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): self
+    {
+        if ($this->produit->contains($produit)) {
+            $this->produit->removeElement($produit);
+        }
+
+        return $this;
     }
 }

@@ -65,10 +65,16 @@ class Produit
      */
     private $groupes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\TempsPrelevement", mappedBy="produit")
+     */
+    private $tempsPrelevements;
+
     public function __construct()
     {
         $this->groupes = new ArrayCollection();
         $this->datePremierPrelevement = new \DateTime();
+        $this->tempsPrelevements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -212,6 +218,34 @@ class Produit
     {
         return $this->idProduitPorsolt;
 
+    }
+
+    /**
+     * @return Collection|TempsPrelevement[]
+     */
+    public function getTempsPrelevements(): Collection
+    {
+        return $this->tempsPrelevements;
+    }
+
+    public function addTempsPrelevement(TempsPrelevement $tempsPrelevement): self
+    {
+        if (!$this->tempsPrelevements->contains($tempsPrelevement)) {
+            $this->tempsPrelevements[] = $tempsPrelevement;
+            $tempsPrelevement->addProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTempsPrelevement(TempsPrelevement $tempsPrelevement): self
+    {
+        if ($this->tempsPrelevements->contains($tempsPrelevement)) {
+            $this->tempsPrelevements->removeElement($tempsPrelevement);
+            $tempsPrelevement->removeProduit($this);
+        }
+
+        return $this;
     }
 
 }

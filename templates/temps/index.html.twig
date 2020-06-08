@@ -5,15 +5,16 @@
     <div class="container">
         {% include '/arrow/arrowTemps.html.twig' %}
     </div>
+
     <div class="tableauTemps">
 
         <div class="message d-flex justify-content-center">
             {% for message in app.flashes('success') %}
-            <div class="col-md-6 p-a-1 text-center">
-                <div class="alert alert-success m-t-1 text-xs-center mt-3" role="alert">
-                    <i class="fa fa-check fa-fw fa-lg"></i>{{ message }}
+                <div class="col-md-6 p-a-1 text-center">
+                    <div class="alert alert-success m-t-1 text-xs-center mt-3" role="alert">
+                        <i class="fa fa-check fa-fw fa-lg"></i>{{ message }}
+                    </div>
                 </div>
-            </div>
             {% endfor %}
         </div>
 
@@ -25,8 +26,8 @@
                 {% for temps in tempss %}
                     <th style="text-align:center;width:5%;">{{ temps.tempsPrelevement }}
                         <form method="post" action="{{ path ('temps.delete', {'id':temps.id}) }}">
-                        <input type="hidden" name="_method" value="DELETE">
-{#                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ temps.id) }}">#}
+                            <input type="hidden" name="_method" value="DELETE">
+                            {#                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ temps.id) }}">#}
                             <a href="{{ path ('temps.delete', {'id':temps.id}) }}"><button type="button" data-func="dt-add" class="btn btn-success btn-xs dt-add ml-5">
                                     <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
                             </a>
@@ -39,44 +40,23 @@
             {% for produit in etude.produits %}
                 <tr>
                     <form method="post" action="{{ path('temps.index', {id: etude.id, slug: etude.slug}) }}">
-                    <td><input type="checkbox" name="dataCheckBox[]" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1"></label>
-                        <input type="submit" name="btn_envoi" value="envoyer">
-                    </td>
-                    <td><a href="{{ path('temps.show', {id: produit.id, slug: produit.slug}) }}">{{ produit.groupe }}</a></td>
-                        {% for temps in tempss %}
-                        <form method="post" action="{{ path('temps.index', {id: etude.id, slug: etude.slug}) }}">
-                            <td><input type="checkbox" name="dataCheckBox[]" value ="{{temps.id}}" class="form-check-input" id="exampleCheck1">
+                        <td><input type="checkbox" name="dataCheckBox[]"  class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1"></label>
+                            <input type="submit" name="btn_envoi" value="envoyer">
+                        </td>
+                        <td><a href="{{ path('temps.show', {id: produit.id, slug: produit.slug}) }}">{{ produit.groupe }}</a></td>
+                    </form>
+                    {% for temps in tempss %}
+                        <form method="POST" action="{{ path('dataCheckBox.insert', {id:etude.id, slug: etude.slug, produit:produit.id}) }}">
+                            <td><input type="checkbox" name="dataCheckBox[]" value="{{ temps.id }}" class="form-check-input" id="exampleCheck1">
                                 <label class="form-check-label" for="exampleCheck1"></label>
-                                <input type="submit" name="btn_envoi" value="envoyer">
+                                <button type="submit">Envoyer</button>
                             </td>
                         </form>
-                        {%  endfor %}
-                    </form>
-{#                    <?php#}
-
-{#    if(isset($_POST['btn_envoi'])){#}
-{#        // rempli la connection a ta BDD généralement user = root et pass est vide#}
-{#        $DB = new PDO('mysql:host=localhost;dbname=porsolt','root','', array(#}
-{#                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',#}
-{#                    PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION,PDO::ERRMODE_WARNING#}
-{#                    ));#}
-{#                    // dans values le premier champs est vide car il s'agit de l'id en BDD qui est en autoincrement#}
-{#                    $req = $DB->prepare("INSERT INTO matable VALUES ('', ? );");#}
-{#                    // ici on peut egalement faire un array($_POST['dataCheckBox']) et remplacer :checkbox dans la requete par un ?#}
-{#                    // , cela remplira les ? dans l'ordre du tableau.#}
-{#                    // exemple : $req = $DB->prepare("INSERT INTO tempsPrelevement VALUES ('',  ? );");#}
-{#                    // $req->execute(array($_POST['dataCheckBox']));#}
-{#                    // les deux techniques fonctionnent#}
-{#                    $req->execute(array(':checkbox' => $_POST['dataCheckBox']));#}
-{#                    }#}
-
-
-{#                    ?>#}
+                    {% endfor %}
                 </tr>
             {% endfor %}
             </tbody>
-
         </table>
     </div>
     <div class="container d-flex mt-5" >
@@ -94,59 +74,54 @@
             </div>
         </div>
     </div>
-    <div>
-    </div>
-{#    <div class="col-md-4">#}
-{#        <form method="post" action="{{ path('admin.temps.delete', {id: etude.id}, {slug: etude.slug}) }}" style="display:inline-block" onsubmit="return confirm('Êtes vous sûr?')">#}
-{#            <input type="hidden" name="_method" value="DELETE">#}
-{#            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ temps.id) }}">#}
-{#            <button class="btn btn-danger mr-1">Supprimer</button>#}
-{#        </form>#}
-{#    </div>#}
+    {#    <div class="col-md-4">#}
+    {#        <form method="post" action="{{ path('admin.temps.delete', {id: etude.id}, {slug: etude.slug}) }}" style="display:inline-block" onsubmit="return confirm('Êtes vous sûr?')">#}
+    {#            <input type="hidden" name="_method" value="DELETE">#}
+    {#            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ temps.id) }}">#}
+    {#            <button class="btn btn-danger mr-1">Supprimer</button>#}
+    {#        </form>#}
+    {#    </div>#}
 
 
-{#<div class="">#}
+    {#<div class="">#}
 
-{#        <td>#}
-
-
-{#            <?php#}
-
-{#    if(isset($_POST['btn_envoi']))#}{#}#}
-{#        // rempli la connection a ta BDD généralement user = root et pass est vide#}
-{#        $DB = new PDO('mysql:host=localhost;dbname=porsolt','user','pass', array(#}
-{#                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',#}
-{#            PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION,PDO::ERRMODE_WARNING#}
-{#            ));#}
-{#            // dans values le premier champs est vide car il s'agit de l'id en BDD qui est en autoincrement#}
-{#            $req = $DB->prepare("INSERT INTO matable VALUES ('', :checkbox );");#}
-{#            // ici on peut egalement faire un array($_POST['checkbox1']) et remplacer :checkbox dans la requete par un ?#}
-{#            // , cela remplira les ? dans l'ordre du tableau.#}
-{#            // exemple : $req = $DB->prepare("INSERT INTO matable VALUES ('',  ? );");#}
-{#            // $req->execute(array($_POST['checkbox1']));#}
-{#            // les deux techniques fonctionnent#}
-{#            $req->execute(array(':checkbox' => $_POST['checkbox1']));#}
-{#            }#}
+    {#        <td>#}
 
 
-{#            ?>#}
-{#</div>#}
+    {#            <?php#}
+
+    {#    if(isset($_POST['btn_envoi']))#}{#}#}
+    {#        // rempli la connection a ta BDD généralement user = root et pass est vide#}
+    {#        $DB = new PDO('mysql:host=localhost;dbname=porsolt','user','pass', array(#}
+    {#                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',#}
+    {#            PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION,PDO::ERRMODE_WARNING#}
+    {#            ));#}
+    {#            // dans values le premier champs est vide car il s'agit de l'id en BDD qui est en autoincrement#}
+    {#            $req = $DB->prepare("INSERT INTO matable VALUES ('', :checkbox );");#}
+    {#            // ici on peut egalement faire un array($_POST['checkbox1']) et remplacer :checkbox dans la requete par un ?#}
+    {#            // , cela remplira les ? dans l'ordre du tableau.#}
+    {#            // exemple : $req = $DB->prepare("INSERT INTO matable VALUES ('',  ? );");#}
+    {#            // $req->execute(array($_POST['checkbox1']));#}
+    {#            // les deux techniques fonctionnent#}
+    {#            $req->execute(array(':checkbox' => $_POST['checkbox1']));#}
+    {#            }#}
 
 
-{#    <form method='POST' action="{{ path('temps.index', {id: etude.id, slug: etude.slug}) }}">#}
-{#        <table class="table table-condensed">#}
-{#            <tr>#}
-{#                <td><input type="checkbox" name="dataCheckBox[]" value="value="<?php echo $jeune->ath_id; ?>"#}
-{#                    <?php if ($jeune->ath_cocher == 1 ) {echo 'checked';} ?> />"class="form-check-input" id="exampleCheck1"><br/>#}
-{#                    <label class="form-check-label" for="exampleCheck1"></label>#}
-
-{#                </td>#}
-{#            </tr>#}
-{#        </table>#}
-{#    </form>#}
+    {#            ?>#}
+    {#</div>#}
 
 
+    {#    <form method='POST' action="{{ path('temps.index', {id: etude.id, slug: etude.slug}) }}">#}
+    {#        <table class="table table-condensed">#}
+    {#            <tr>#}
+    {#                <td><input type="checkbox" name="dataCheckBox[]" value="value="<?php echo $jeune->ath_id; ?>"#}
+    {#                    <?php if ($jeune->ath_cocher == 1 ) {echo 'checked';} ?> />"class="form-check-input" id="exampleCheck1"><br/>#}
+    {#                    <label class="form-check-label" for="exampleCheck1"></label>#}
 
+    {#                </td>#}
+    {#            </tr>#}
+    {#        </table>#}
+    {#    </form>#}
 
 {% endblock %}
 
