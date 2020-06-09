@@ -128,35 +128,6 @@ class TempsPrelevement
     }
 
     public function getDataCheckBox(): ArrayCollection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     {
         return $this->dataCheckBox;
     }
@@ -178,6 +149,11 @@ class TempsPrelevement
      * @return Collection|Produit[]
      */
     public function getProduit(): Collection
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(): Collection
     {
         return $this->produit;
     }

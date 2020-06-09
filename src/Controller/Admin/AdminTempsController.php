@@ -11,6 +11,7 @@ use App\Repository\EtudeRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\TempsPrelevementRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\String_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,24 +76,7 @@ class AdminTempsController extends AbstractController
             ], 301);
         }
 
-
-
-
-//
-//        foreach($quest as $prop=>$qst){
-//            $reponse= new Reponse();
-//            $reponse->setIdQuestion($qst);
-//            $reponse->setIdProposition($prop);
-//            $reponse->setCreatedAt(new \DateTime());
-//            $manager->persist($reponse);
-//            $manager->flush();
-
-
-
-
         if ($form->isSubmitted() && $form->isValid()) {
-
-
 
             $this->em->persist($temps);
             $this->em->flush();
@@ -108,7 +92,6 @@ class AdminTempsController extends AbstractController
         $produits->findAll();
 
         $quest = $request->request->all();
-
 
         return $this->render('temps/index.html.twig', [
             'produit' => $produit,
@@ -155,57 +138,45 @@ class AdminTempsController extends AbstractController
      * @param Produit $produit
      * @param Request $request
      * @param EntityManagerInterface $em
+     * @param $id
      * @return Response
      */
-    public function dataCheckBoxInsert(string $slug, Etude $etude, Produit $produit, Request $request,EntityManagerInterface $em): Response
+    public function dataCheckBoxInsert(string $slug, Etude $etude, Produit $produit, Request $request,EntityManagerInterface $em, $id): Response
     {
-        dump($request->request);
-//        foreach ($tempss as $dataCheckBox => $qst) {
-//            $temps = new TempsPrelevement();
-//            $temps->setProduit($produit);
-
-//            dump($qst);
-        die('salut');
-//            $em->persist($temps);
-//            $em->flush();
+        $tempss = $this->TempsPrelevementRepository->findAll();
+//        $dataCheckBox = array();
+//        foreach ($dataCheckBox as $color){
+//            echo "aimaiz vous  $color\n";
 //        }
-//        $this->redirectToRoute()
-    }
-//    /**
-//     * @Route("/temps/index/{slug}-{id}", name="temps.new", requirements={"slug": "[a-z0-9\-]*"})
-//     * @param Request $request
-//     * @param Etude $etude
-//     * @param string $slug
-//     * @return RedirectResponse|Response
-//     */
-//    public function new(Request $request, Etude $etude, string $slug): Response
-//    {
-//
-//        $tempss = $this->TempsPrelevementRepository->findAll();
-//        $temps = new TempsPrelevement();
+        $tableauDataCheckBox = array($tempss);
+
+        foreach ($tableauDataCheckBox as $temps=>$dataCheckBox) {
+
+            $temps=$this->TempsPrelevementRepository;
+            $temps = new TempsPrelevement();
+            $temps->getTempsPrelevement();
+            // $dataCheckBox=$this->get($id);
+//            $temps->setDataCheckBox([$temps]);
+
+                dump($dataCheckBox);
+                die();
+
+                $em->persist($temps);
+                $em->flush();
+
+        }
 //        $form = $this->createForm(TempsPrelevementType::class, $temps);
 //        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//
-//            $this->em->persist($temps);
-//            $this->em->flush();
-//
-//            return $this->redirectToRoute('temps.index', [
-//                'id' => $etude->getId(),
-//                'slug' => $etude->getSlug()
-//            ], 301);
-//        }
-//
-////        $etude = $produit->getEtude();
-//
+
+        return new Response('datacheckbox');
 //        return $this->render('temps/index.html.twig', [
-//            'temps' => $temps,
-//            'tempss' => $tempss,
+//            'produit' => $produit,
 //            'etude' => $etude,
+//            'tempss' => $tempss,
 //            'form' => $form->createView()
+//
 //        ]);
-//    }
+    }
 
     /**
      * @Route("/temps/show/{slug}-{id}", name="temps.show", requirements={"slug": "[a-z0-9\-]*"})
@@ -245,7 +216,7 @@ class AdminTempsController extends AbstractController
     }
 
     /**
-     * @Route("/temps/index/{id}", name="temps.delete", requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/temps/delete/{id}", name="temps.delete", requirements={"slug": "[a-z0-9\-]*"})
      * @param TempsPrelevement $temps
      * @param Etude $etude
      * @return Response
@@ -262,9 +233,10 @@ class AdminTempsController extends AbstractController
 
 
 
-//        return $this->redirectToRoute('temps.index', [
-//            'id' => $etude->getId(),
-//            'slug' => $etude->getSlug()
+//        return $this->redirectToRoute('temps.index'
+//        , [
+//                'id' => $temps->getId(),
+//                'slug' => $etude->getSlug()
 //        ], 301);
     }
 
