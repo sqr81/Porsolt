@@ -125,27 +125,6 @@ class AdminEtudeController extends AbstractController
             'slug' => $etude->getSlug()
 
         ]);
-
     }
-
-
-//    /**
-//     * @Route("/pages/test", name="etude.test")
-//     * @return Response
-//     */
-//    public function getByNumero($idEtude): Response
-//    {
-//        $this->getDoctrine()->getManager();
-//
-//        $etudes = $this->repository->findByNumero();
-//
-//
-//        dump($etudes);
-//        die();
-//        return $this->render('pages/test.html.twig', [
-//            'etudes' => $etudes,
-//
-//        ]);
-//    }
 
 }

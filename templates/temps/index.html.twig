@@ -48,7 +48,7 @@
                     </form>
                     {% for temps in tempss %}
                         <form method="POST" action="{{ path('dataCheckBox.insert', {id:etude.id, slug: etude.slug, produit:produit.id}) }}">
-                            <td><input type="checkbox" name="dataCheckBox[]" value="'.$dataCheckBox['temps_prelevment_id'].'" class="form-check-input" id="exampleCheck1">
+                            <td><input type="checkbox" name="dataCheckBox[]" value="{{ temps.id }}" class="form-check-input" id="exampleCheck1">
                                 <label class="form-check-label" for="exampleCheck1"></label>
                                 <button type="submit">Envoyer</button>
                             </td>
@@ -74,6 +74,29 @@
             </div>
         </div>
     </div>
+{#<div class="container d-flex mt-5" >#}
+{#    {% for temps in tempss %}#}
+{#    <form method="POST" action="{{ path('dataCheckBox.insert', {id:etude.id, slug: etude.slug, produit:produit.id}) }}">#}
+{#        <input type="checkbox" name="check_list[]" value="{ temps.id }"><label>0.5h</label><br/>#}
+{#        <input type="checkbox" name="check_list[]" value="1h"><label>1h</label><br/>#}
+{#        <input type="checkbox" name="check_list[]" value="2h"><label>2h</label><br/>#}
+{#        <input type="checkbox" name="check_list[]" value="4h"><label>4h</label><br/>#}
+{#        <input type="checkbox" name="check_list[]" value="8h"><label>8h</label><br/>#}
+{#        <input type="checkbox" name="check_list[]" value="Day1"><label>Day1</label><br/>#}
+{#        <input type="submit" name="submit" value="Créer"/>#}
+{#    </form>#}
+{#    {% endfor %}#}
+    <?php
+if(isset($_POST['submit'])){//to run PHP script on submit
+if(!empty($_POST['check_list'])){
+// Loop to store and display values of individual checked checkbox.
+foreach($_POST['check_list'] as $selected){
+echo $selected."</br>";
+</div>
+    }
+    }
+    }
+    ?>
     {#    <div class="col-md-4">#}
     {#        <form method="post" action="{{ path('admin.temps.delete', {id: etude.id}, {slug: etude.slug}) }}" style="display:inline-block" onsubmit="return confirm('Êtes vous sûr?')">#}
     {#            <input type="hidden" name="_method" value="DELETE">#}

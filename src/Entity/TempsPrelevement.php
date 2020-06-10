@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TempsPrelevementRepository")
+ * @UniqueEntity("tempsPrelevement")
  */
 class TempsPrelevement
 {
@@ -43,6 +45,7 @@ class TempsPrelevement
      */
     private $produit;
 
+
     public function __construct()
     {
         $this->prelevements = new ArrayCollection();
@@ -64,6 +67,16 @@ class TempsPrelevement
     public function setTempsPrelevement(?string $tempsPrelevement): self
     {
         $this->tempsPrelevement = $tempsPrelevement;
+
+        return $this;
+    }
+
+    public function addTempsPrelevement(TempsPrelevement $temps): self
+    {
+        if (!$this->tempss->contains($temps)) {
+            $this->tempss[] = $temps;
+            $temps->setTempsPrelevement($this);
+        }
 
         return $this;
     }

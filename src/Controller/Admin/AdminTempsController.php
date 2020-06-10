@@ -11,6 +11,7 @@ use App\Repository\EtudeRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\TempsPrelevementRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PDO;
 use phpDocumentor\Reflection\Types\String_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -141,41 +142,18 @@ class AdminTempsController extends AbstractController
      * @param $id
      * @return Response
      */
-    public function dataCheckBoxInsert(string $slug, Etude $etude, Produit $produit, Request $request,EntityManagerInterface $em, $id): Response
+    public function dataCheckBoxInsert(string $slug, Etude $etude, Produit $produit, Request $request,EntityManagerInterface $em): Response
     {
-        $tempss = $this->TempsPrelevementRepository->findAll();
-//        $dataCheckBox = array();
-//        foreach ($dataCheckBox as $color){
-//            echo "aimaiz vous  $color\n";
-//        }
-        $tableauDataCheckBox = array($tempss);
 
-        foreach ($tableauDataCheckBox as $temps=>$dataCheckBox) {
-
-            $temps=$this->TempsPrelevementRepository;
-            $temps = new TempsPrelevement();
-            $temps->getTempsPrelevement();
-            // $dataCheckBox=$this->get($id);
-//            $temps->setDataCheckBox([$temps]);
-
-                dump($dataCheckBox);
-                die();
-
-                $em->persist($temps);
-                $em->flush();
-
-        }
-//        $form = $this->createForm(TempsPrelevementType::class, $temps);
-//        $form->handleRequest($request);
-
-        return new Response('datacheckbox');
-//        return $this->render('temps/index.html.twig', [
-//            'produit' => $produit,
-//            'etude' => $etude,
-//            'tempss' => $tempss,
-//            'form' => $form->createView()
 //
-//        ]);
+//        return new Response('datacheckbox');
+//////        return $this->render('temps/index.html.twig', [
+//////            'produit' => $produit,
+//////            'etude' => $etude,
+//////            'tempss' => $tempss,
+//////            'form' => $form->createView()
+//////
+//////        ]);
     }
 
     /**
@@ -231,8 +209,6 @@ class AdminTempsController extends AbstractController
 
         return new Response('suppression effectuée');
 
-
-
 //        return $this->redirectToRoute('temps.index'
 //        , [
 //                'id' => $temps->getId(),
@@ -240,5 +216,71 @@ class AdminTempsController extends AbstractController
 //        ], 301);
     }
 
+    /* cocher les checkbox*/
+    /**
+     * @Route("/datacheckbox", name="datacheckbox.edit")
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function dataCheckBox(Request $request,EntityManagerInterface $em)
+    {
+        $tempss = $this->TempsPrelevementRepository->findAll();
+        $temps = new TempsPrelevement();
+//        $form = $this->createForm(TempsPrelevementType::class, $temps);
+//        $form->handleRequest($request);
 
+        if(isset($_POST['submit'])){
+            if(!empty($_POST['check_list'])) {
+// Counting number of checked checkboxes.
+                $checked_count = count($_POST['check_list']);
+                echo "Vous avez selectionné ".$checked_count." option(s)temps: <br/>";
+// Loop to store and display values of individual checked checkbox.
+                foreach($_POST['check_list'] as $selected) {
+                    echo "<p>".$selected ."</p>";
+                    $temps = new TempsPrelevement();
+                 $temps->setTempsPrelevement($selected);
+                 $this->em->persist($temps);
+                 $this->em->flush();
+                }
+            }
+            else{
+                echo "<b>Veuillez selectionner au moins 1 option.</b>";
+            }
+        }
+        return $this->redirectToRoute("datacheckbox.newTime");
+    }
+
+    /*rajoute un temps sur la page check box*/
+    /**
+     * @Route("/datacheckbox/newTime", name="datacheckbox.newTime")
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function dataCheckBoxNewTemps (Request $request,EntityManagerInterface $em):Response
+    {
+        $tempss = $this->TempsPrelevementRepository->findAll();
+
+        $temps = new TempsPrelevement();
+        $form = $this->createForm(TempsPrelevementType::class, $temps);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->em->persist($temps);
+            $this->em->flush();
+
+            return $this->redirectToRoute('datacheckbox.newTime');
+        }
+        //renvoi l etude dans l arrow
+//        $etude = $produit->getEtude();//----//
+        return $this->render('/dataCheckBox/dataCheckBox.html.twig', [
+            'temps' => $temps,
+            'tempss' => $tempss,
+//            'etude' => $etude,
+//            'produit' => $produit,
+            'form' => $form->createView()
+        ]);
+    }
 }
