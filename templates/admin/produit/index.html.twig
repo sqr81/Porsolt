@@ -1,5 +1,4 @@
 {% block body %}
-
     <table class="table table-striped table-light mt-4 border border-secondary-rounded text-center">
         <table class="table table-striped table-light mt-4 border border-secondary-rounded text-center">
             <thead>
@@ -9,10 +8,8 @@
                 <th><button class="btn btn-dark btn-md btn-block">Nb test item</button></th>
                 <th><button class="btn btn-dark btn-md btn-block">Voie admin</button></th>
                 <th><button class="btn btn-dark btn-md btn-block">Date 1er prélèvement</button></th>
-                <th><button class="btn btn-dark btn-lg btn-block">      </button></th>
-                {#<th><a href="{{  path('admin.produit.edit', {id: produit.id}) }}" class="btn btn-dark btn-md btn-block">Nb test item</a></th>#}
+                <th><button class="btn btn-dark btn-lg btn-block"></button></th>
             </tr>
-
             </thead>
         <tbody>
         {% for produit in etude.produits %}
@@ -22,41 +19,13 @@
                 <td>{{ produit.nbreAnimaux }}</td>
                 <td>{{ produit.voieAdmin }}</td>
                 <td>{{ produit.datePremierPrelevement|date("d/m/Y") }}</td>
-{#                <td>#}
-{#                    <form method="post">#}
-{#                        <div class="form-group"> <!-- Date input -->#}
-{#                            <label class="control-label" for="date"><span class="glyphicon glyphicon-calendar"></span></label>#}
-{#                            <input class="form-control" id="date" name="date" placeholder="DD/MM/YYY" type="text"/>#}
-{#                        </div>#}
-{#                    </form>#}
-{#                </td>#}
-{#                <td><button class="btn btn-primary " name="submit" type="submit">Submit</button></td>#}
-
                 <td><a href="{{ path('admin.produit.edit', {id: produit.id}) }}" class="btn btn-secondary">Editer</a></td>
-
             </tr>
         {% endfor %}
-
         </tbody>
-
     </table>
     <div class="container">
     <a href="{{ path('admin.produit.new') }}" class="btn btn-primary">creer</a>
     </div>
-        {#pour le calendrier#}
-{#        <script>#}
-{#            $(document).ready(function(){#}
-{#                const date_input = $('input[name="date"]'); //our date input has the name "date"#}
-{#                const container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";#}
-{#                const options = {#}
-{#                    format: 'dd/mm/yyyy',#}
-{#                    container: container,#}
-{#                    todayHighlight: true,#}
-{#                    autoclose: true,#}
-{#                };#}
-{#                date_input.datepicker(options);#}
-{#            })#}
-{#        </script>#}
-        {#fin pour le calendrier#}
 {% endblock %}
 

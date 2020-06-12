@@ -39,5 +39,19 @@ class ArrowController  extends AbstractController
 
         ]);
     }
+
+    /**
+     * @Route("/arrow/arrowTemps")
+     * @param Etude $etude
+     * @return Response
+     */
+    public function arrowTemps(Etude $etude)
+    {
+
+        return $this->render('/arrow/arrowTemps.html.twig', [
+            'etude' => $etude,
+
+        ]);
+    }
 }
 

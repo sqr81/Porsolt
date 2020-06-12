@@ -62,7 +62,7 @@ class AdminEtudeController extends AbstractController
         ]);
     }
 
-
+    /* ----création nouvelle étude-----*/
     /**
      * @Route("/admin/etude/new", name="admin.etude.new")
      * @param Request $request
@@ -86,6 +86,7 @@ class AdminEtudeController extends AbstractController
         ]);
     }
 
+    /* ------supprimer une étude ------*/
     /**
      * @Route("/admin/etude/{id}", name="admin.etude.delete", methods="DELETE")
      * @param Etude $etude
@@ -101,6 +102,7 @@ class AdminEtudeController extends AbstractController
         return $this->redirectToRoute('etude.index');
     }
 
+    /* ----détail d'une étude-----*/
     /**
      * @Route("/etudes/{slug}-{id}", name="etude.show", requirements={"slug": "[a-z0-9\-]*"})
      * @param Etude $etude

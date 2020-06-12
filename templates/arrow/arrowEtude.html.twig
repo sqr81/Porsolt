@@ -1,6 +1,5 @@
 {% block body %}
 <div class=container">
-
     <div class="nav row d-flex mt-4 mb-4">
             <div class="col-md-2">
                 <label for="formGroupExampleInput"></label><input type="text" class="form-control" id="formGroupExampleInput" placeholder="N° d'étude">
@@ -10,7 +9,6 @@
             </div>
             <div class="col md-2 mr-4 ml-4">
             <a href="{{ path('etude.show', {id: etude.id, slug: etude.slug}) }}" class="btn btn-secondary mr-1">{{ etude.numero }}</a>
-
             </div>
             <div class="col-md-2 ml-4">
                 <button class="btn btn-secondary ">Gestionnaire formulaire</button>
@@ -61,6 +59,5 @@
             <div class    = "step"> <span>Récapitualif</span> </div>
         </div>
     </div>
-
 {% endblock %}
 

@@ -1,13 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block title 'Temps' %}
 {% block body %}
-
     <div class="container">
         {% include '/arrow/arrowTemps.html.twig' %}
     </div>
-
     <div class="tableauTemps">
-
         <div class="message d-flex justify-content-center">
             {% for message in app.flashes('success') %}
                 <div class="col-md-6 p-a-1 text-center">
@@ -17,7 +14,6 @@
                 </div>
             {% endfor %}
         </div>
-
         <table id="example" class="table table-striped table-bordered mt-3 text-center"  style="width:100%">
             <thead>
             <tr>
@@ -42,7 +38,6 @@
                     <form method="POST" action="{{ path('temps.index', {id: etude.id, slug: etude.slug}) }}">
                         <td><input type="checkbox" name="dataCheckBox[]"  class="form-check-input" id="exampleCheck1">
                             <label class="form-check-label" for="exampleCheck1"></label>
-{#                            <input type="submit" name="btn_envoi" value="envoyer">#}
                         </td>
                         <td><a href="{{ path('temps.show', {id: produit.id, slug: produit.slug}) }}">{{ produit.groupe }}</a></td>
                     </form>
@@ -50,7 +45,6 @@
                         <form method="POST" action="{{ path('dataCheckBox.insert', {id:etude.id, slug: etude.slug, produit:produit.id}) }}">
                             <td><input type="checkbox" name="dataCheckBox[]" value="{{ temps.id }}" class="form-check-input" id="exampleCheck1">
                                 <label class="form-check-label" for="exampleCheck1"></label>
-                                <button type="submit">Envoyer</button>
                             </td>
                         </form>
                     {% endfor %}
@@ -74,18 +68,6 @@
             </div>
         </div>
     </div>
-{#<div class="container d-flex mt-5" >#}
-{#    {% for temps in tempss %}#}
-{#    <form method="POST" action="{{ path('dataCheckBox.insert', {id:etude.id, slug: etude.slug, produit:produit.id}) }}">#}
-{#        <input type="checkbox" name="check_list[]" value="{ temps.id }"><label>0.5h</label><br/>#}
-{#        <input type="checkbox" name="check_list[]" value="1h"><label>1h</label><br/>#}
-{#        <input type="checkbox" name="check_list[]" value="2h"><label>2h</label><br/>#}
-{#        <input type="checkbox" name="check_list[]" value="4h"><label>4h</label><br/>#}
-{#        <input type="checkbox" name="check_list[]" value="8h"><label>8h</label><br/>#}
-{#        <input type="checkbox" name="check_list[]" value="Day1"><label>Day1</label><br/>#}
-{#        <input type="submit" name="submit" value="Créer"/>#}
-{#    </form>#}
-{#    {% endfor %}#}
     <?php
 if(isset($_POST['submit'])){//to run PHP script on submit
 if(!empty($_POST['check_list'])){
@@ -93,58 +75,6 @@ if(!empty($_POST['check_list'])){
 foreach($_POST['check_list'] as $selected){
 echo $selected."</br>";
 </div>
-    }
-    }
-    }
-    ?>
-    {#    <div class="col-md-4">#}
-    {#        <form method="post" action="{{ path('admin.temps.delete', {id: etude.id}, {slug: etude.slug}) }}" style="display:inline-block" onsubmit="return confirm('Êtes vous sûr?')">#}
-    {#            <input type="hidden" name="_method" value="DELETE">#}
-    {#            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ temps.id) }}">#}
-    {#            <button class="btn btn-danger mr-1">Supprimer</button>#}
-    {#        </form>#}
-    {#    </div>#}
-
-
-    {#<div class="">#}
-
-    {#        <td>#}
-
-
-    {#            <?php#}
-
-    {#    if(isset($_POST['btn_envoi']))#}{#}#}
-    {#        // rempli la connection a ta BDD généralement user = root et pass est vide#}
-    {#        $DB = new PDO('mysql:host=localhost;dbname=porsolt','user','pass', array(#}
-    {#                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',#}
-    {#            PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION,PDO::ERRMODE_WARNING#}
-    {#            ));#}
-    {#            // dans values le premier champs est vide car il s'agit de l'id en BDD qui est en autoincrement#}
-    {#            $req = $DB->prepare("INSERT INTO matable VALUES ('', :checkbox );");#}
-    {#            // ici on peut egalement faire un array($_POST['checkbox1']) et remplacer :checkbox dans la requete par un ?#}
-    {#            // , cela remplira les ? dans l'ordre du tableau.#}
-    {#            // exemple : $req = $DB->prepare("INSERT INTO matable VALUES ('',  ? );");#}
-    {#            // $req->execute(array($_POST['checkbox1']));#}
-    {#            // les deux techniques fonctionnent#}
-    {#            $req->execute(array(':checkbox' => $_POST['checkbox1']));#}
-    {#            }#}
-
-
-    {#            ?>#}
-    {#</div>#}
-
-
-    {#    <form method='POST' action="{{ path('temps.index', {id: etude.id, slug: etude.slug}) }}">#}
-    {#        <table class="table table-condensed">#}
-    {#            <tr>#}
-    {#                <td><input type="checkbox" name="dataCheckBox[]" value="value="<?php echo $jeune->ath_id; ?>"#}
-    {#                    <?php if ($jeune->ath_cocher == 1 ) {echo 'checked';} ?> />"class="form-check-input" id="exampleCheck1"><br/>#}
-    {#                    <label class="form-check-label" for="exampleCheck1"></label>#}
-
-    {#                </td>#}
-    {#            </tr>#}
-    {#        </table>#}
-    {#    </form>#}
 
 {% endblock %}
 

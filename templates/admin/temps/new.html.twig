@@ -1,15 +1,12 @@
 {% extends "base.html.twig" %}
 {% block title 'nouveau temps' %}
 {% block body %}
-
     <div class="container mt-4">
         <div class="jumbotron text-center">
             <div class="container mb-5">
                 <h1>Nouveau temps</h1>
             </div>
-
             {{ include ('temps/_form.html.twig', {button:'créer'}) }}
-
         </div>
     </div>
 {% endblock %}

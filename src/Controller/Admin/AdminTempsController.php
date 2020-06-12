@@ -24,11 +24,13 @@ class AdminTempsController extends AbstractController
 
 
 
+
     public function __construct(TempsPrelevementRepository $repository, EntityManagerInterface $em)
     {
         $this->TempsPrelevementRepository = $repository;
         $this->repository = $repository;
         $this->em = $em;
+
     }
     /**
      * @var ProduitRepository
@@ -52,6 +54,7 @@ class AdminTempsController extends AbstractController
     private $produit;
 
 
+    /*--------temps existants----------*/
     /**
      * @Route("/temps/index/{slug}-{id}", name="temps.index", requirements={"slug": "[a-z0-9\-]*"})
      * @param string $slug
@@ -65,7 +68,6 @@ class AdminTempsController extends AbstractController
     {
         $tempss = $this->TempsPrelevementRepository->findAll();    /*checkbox*/
 
-
         $temps = new TempsPrelevement();
         $form = $this->createForm(TempsPrelevementType::class, $temps);
         $form->handleRequest($request);
@@ -76,7 +78,7 @@ class AdminTempsController extends AbstractController
                 'slug' => $etude->getSlug()
             ], 301);
         }
-
+        /*----ajout de temps----*/
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->em->persist($temps);
@@ -92,7 +94,7 @@ class AdminTempsController extends AbstractController
 //        $etude = $produit->getEtude();//----//
         $produits->findAll();
 
-        $quest = $request->request->all();
+
 
         return $this->render('temps/index.html.twig', [
             'produit' => $produit,
@@ -104,6 +106,7 @@ class AdminTempsController extends AbstractController
         ]);
     }
 
+    /*--------temps existants pour chaque produit ----------*/
     /**
      * @Route("/temps/show/{slug}-{id}", name="temps.show", requirements={"slug": "[a-z0-9\-]*"})
      * @param string $slug
@@ -139,23 +142,15 @@ class AdminTempsController extends AbstractController
      * @param Produit $produit
      * @param Request $request
      * @param EntityManagerInterface $em
-     * @param $id
      * @return Response
      */
     public function dataCheckBoxInsert(string $slug, Etude $etude, Produit $produit, Request $request,EntityManagerInterface $em): Response
     {
 
-//
-//        return new Response('datacheckbox');
-//////        return $this->render('temps/index.html.twig', [
-//////            'produit' => $produit,
-//////            'etude' => $etude,
-//////            'tempss' => $tempss,
-//////            'form' => $form->createView()
-//////
-//////        ]);
     }
 
+
+    /*-----------nouveau temps pour les groupes----------*/
     /**
      * @Route("/temps/show/{slug}-{id}", name="temps.show", requirements={"slug": "[a-z0-9\-]*"})
      * @param Request $request
@@ -193,6 +188,7 @@ class AdminTempsController extends AbstractController
         ]);
     }
 
+    /*-------supprimer un temps-----*/
     /**
      * @Route("/temps/delete/{id}", name="temps.delete", requirements={"slug": "[a-z0-9\-]*"})
      * @param TempsPrelevement $temps
@@ -201,6 +197,7 @@ class AdminTempsController extends AbstractController
      */
     public function delete(TempsPrelevement $temps)
     {
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($temps);
         $this->addFlash('success', 'Suppression effectuée');/*egalement a afficher dans la vue*/
@@ -216,20 +213,15 @@ class AdminTempsController extends AbstractController
 //        ], 301);
     }
 
-    /* cocher les checkbox*/
+    /*------------ cocher les checkbox liées aux temps---------------*/
     /**
      * @Route("/datacheckbox", name="datacheckbox.edit")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function dataCheckBox(Request $request,EntityManagerInterface $em)
+    public function dataCheckBox(Request $request,EntityManagerInterface $em):Response
     {
-        $tempss = $this->TempsPrelevementRepository->findAll();
-        $temps = new TempsPrelevement();
-//        $form = $this->createForm(TempsPrelevementType::class, $temps);
-//        $form->handleRequest($request);
-
         if(isset($_POST['submit'])){
             if(!empty($_POST['check_list'])) {
 // Counting number of checked checkboxes.
@@ -239,9 +231,11 @@ class AdminTempsController extends AbstractController
                 foreach($_POST['check_list'] as $selected) {
                     echo "<p>".$selected ."</p>";
                     $temps = new TempsPrelevement();
-                 $temps->setTempsPrelevement($selected);
-                 $this->em->persist($temps);
-                 $this->em->flush();
+                    $temps->setTempsPrelevement($selected);
+                    if(isset($selected)){
+                        echo 'La variable selected est définie' . '<br />';}
+                    $this->em->persist($temps);
+                    $this->em->flush();
                 }
             }
             else{
@@ -251,7 +245,7 @@ class AdminTempsController extends AbstractController
         return $this->redirectToRoute("datacheckbox.newTime");
     }
 
-    /*rajoute un temps sur la page check box*/
+    /*----------rajoute un temps sur la page check box------------*/
     /**
      * @Route("/datacheckbox/newTime", name="datacheckbox.newTime")
      * @param Request $request
@@ -260,6 +254,7 @@ class AdminTempsController extends AbstractController
      */
     public function dataCheckBoxNewTemps (Request $request,EntityManagerInterface $em):Response
     {
+
         $tempss = $this->TempsPrelevementRepository->findAll();
 
         $temps = new TempsPrelevement();
@@ -283,4 +278,5 @@ class AdminTempsController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
 }

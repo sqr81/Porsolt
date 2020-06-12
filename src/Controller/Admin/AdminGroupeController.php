@@ -44,57 +44,7 @@ class AdminGroupeController extends AbstractController
         $this->em=$em;
     }
 
-//    /**
-//     * @Route("/groupe/show", name="groupe.index")
-//     * @return Response
-//     */
-//    public function index(): Response
-//    {
-//        /* creation nouvelle entite
-//       $groupe = new Groupe();
-//       $groupe->setIntitule('C')
-//       ->setIdAnimalPorsolt('C1')
-//       ->setNomUsuel('Dog1')
-//       ->setPuce('554485')
-//       ->setNbreAnimaux('10');
-//       $em = $this->getDoctrine()->getManager();
-//       $em->persist($groupe);
-//       $em->flush();*/
-//
-//
-//        $groupes = $this->repository->findAll();
-//        $produits = $this->repository->findAll();
-//        $this->em->flush();
-//        return $this->render('/groupe/show.html.twig', [
-//            'groupes' => $groupes,
-//            'produits' => $produits
-//        ]);
-//    }
-
-
-//    /**
-//     * @Route("/groupe/index", name="groupe.index")
-//     * @return Response
-//     */
-//    public function index(): Response
-//    {
-//        $groupes = $this->repository->findAll();
-//        $produits = $this->repository->findAll();
-//        $etude = new Etude();
-//        $produit = new Produit();
-////        $this->em->flush();
-////        dump($groupes, $produit);
-////        die();
-//
-//        return $this->render('/groupe/index.html.twig', [
-//            'groupes' => $groupes,
-//            'produits' => $produits,
-//            'produit' => $produit,
-//            'etude' => $etude,
-//        ]);
-//
-//    }
-
+    /*-----------liste des études-------------*/
     /**
      * @Route("/groupe/index/{slug}-{id}", name="groupe.index", requirements={"slug": "[a-z0-9\-]*"})
      * @param string $slug
@@ -114,21 +64,18 @@ class AdminGroupeController extends AbstractController
         }
         //renvoit l etude dans l arrow
         $etude = $produit->getEtude();//----//
+
         $groupe = new Groupe();
         return $this->render('groupe/index.html.twig', [
-
             'produit' => $produit,
             'etude' => $etude,
             'groupe' => $groupe,
             'groupes' => $groupes,
             'etudes' => $etudes,
-
         ]);
-
-
     }
 
-
+    /*--------détail des études----------*/
     /**
      * @Route("/groupe/show/{slug}-{id}", name="groupe.show", requirements={"slug": "[a-z0-9\-]*"})
      * @param Produit $produit
@@ -137,8 +84,6 @@ class AdminGroupeController extends AbstractController
      */
     public function show(string $slug, Produit $produit): Response
     {
-//        $groupes = $this->repository->findAll();
-//        $produits = $this->repository->findAll();
         if ($produit->getSlug() !== $slug) {
             return $this->redirectToRoute('groupe.show', [
                 'id' => $produit->getId(),
@@ -147,18 +92,14 @@ class AdminGroupeController extends AbstractController
         }
         //renvoi l etude dans l arrow
         $etude = $produit->getEtude();//----/
+
         return $this->render('groupe/show.html.twig', [
-            //'groupes' => $groupes,
             'produit' => $produit,
-            //'produits' => $produits
             'etude' => $etude,
-
-
         ]);
-
-
     }
 
+    /*----------- création d'un groupe(produit dans bdd)-----------*/
     /**
      * @Route("/admin/{id}/groupe/new/", name="admin.groupe.new")
      * @param Request $request
@@ -172,9 +113,9 @@ class AdminGroupeController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             $idAnimalPorsoltToCompare = $form->get('idAnimalPorsolt')->getData();
-            if ($this->groupeNameExist($produit, $idAnimalPorsoltToCompare))  /*fiche animale unique dans produit*/
+            if ($this->groupeNameExist($produit, $idAnimalPorsoltToCompare))  /*fiche animal unique dans produit*/
             {
-                $this->addFlash('danger', 'Id animal Porsolt déjà éxistant');
+                $this->addFlash('danger', 'Id animal Porsolt déjà éxistant');   /*message si id animal existe deja*/
                 return $this->redirectToRoute('groupe.show', [
                     'id' => $produit->getId(),
                     'slug' => $produit->getSlug(),
@@ -198,69 +139,8 @@ class AdminGroupeController extends AbstractController
         ]);
     }
 
-//    /**
-//     * @Route("/admin/groupe/new/", name="admin.groupe.new")
-//     * @param Request $request
-//     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-//     */
-//    public function new(Request $request)
-//    {
-//        //recup produit
-////        $groupe = new Groupe();
-////        $groupe->setProduit($produit);
-//
-////         recup groupe en fonction etude
-//        $em = $this->getDoctrine()->getManager();
-//        $etudeId =  $this->getId();
-//        $options = array('etudeId' => $etudeId);
-//
-////        $repo = $this->getDoctrine()->getRepository(Produit::class);
-////        $produit = $repo->find($id);
-////        $groupe->setProduit($produit);
-//
-//
-//        $etude = new Etude();
-//        $groupe = new Groupe();
-//        $form = $this->createForm(GroupeType::class, $groupe);// $options pour recup groupe en fonction etude
-//        $form->handleRequest($request);
-//
-//        if($form->isSubmitted() && $form->isValid()) {
-//            $produit = $this->getDoctrine()->getManager()->getRepository('App:Produit')->find($request->request->get('groupe')['groupeId']);
-//
-//            /*comparaison groupe avec produit*/
-//            $nom=$form['idAnimalPorsolt']->getData();
-//            if ($this->groupeNameExist($produit, $nom)){
-//                /*message error + return */
-//                $this->addFlash('danger', 'Id animal Porsolt déjà éxistant');
-//
-//                return $this->render('admin/groupe/new.html.twig',[
-//                    'groupe' => $groupe,
-//                    'form' => $form->createView()
-//                ]);
-//
-//            }
-//
-//            $groupe->setProduit($produit);
-//            $this->em->persist($groupe);
-//            $this->em->flush();
-//
-//            return $this->redirectToRoute('groupe.show', [
-//                'id' => $produit->getId(),
-//                'slug' => $produit->getSlug(),
-//            ], 301);
-//        }
-//        $produit = new Produit();
-//
-//        return $this->render('admin/groupe/new.html.twig',[
-////            'id' => $produit->getId(),
-//            'produit' => $produit,
-//            'groupe' => $groupe,
-//            'form' => $form->createView()
-//        ]);
-//    }
-
+    /*-----fonction pour comparer un groupe avec un  produit existant-----*/
     /**
-     * fonction pour comparer un groupe avec un  produit existant
      * @param Produit $produit
      * @param $nom
      * @return bool
@@ -274,8 +154,6 @@ class AdminGroupeController extends AbstractController
         }
     }
 
-    private function getId()  //         recup groupe en fonction etude
-    {
-    }
+
 
 }

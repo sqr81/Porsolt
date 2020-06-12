@@ -41,7 +41,7 @@ class AdminProduitController extends AbstractController
     {
         $groupes = $this->repository->findAll();
         $produits = $this->repository->findAll();
-
+        /*le return est un include dans la page etude.show*/
         return $this->render('admin/produit/index.html.twig', [
 
             'groupes' => $groupes,
@@ -50,8 +50,7 @@ class AdminProduitController extends AbstractController
         ]);
 
     }
-
-
+    /*--------création d'un nouveau produit(groupe sur la page)---------*/
     /**
      * @Route("/admin/produit/create", name="admin.produit.new")
      * @param Request $request
@@ -79,6 +78,7 @@ class AdminProduitController extends AbstractController
         ]);
     }
 
+    /*-------editer un produit--------*/
     /**
      * @Route("/admin/produit/{id}", name="admin.produit.edit")
      * @param Produit $produit
@@ -92,7 +92,6 @@ class AdminProduitController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
-
 
             return $this->redirectToRoute('etude.show', [
                 'id' => $produit->getEtude()->getId(),

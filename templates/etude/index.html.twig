@@ -2,10 +2,6 @@
 {% block title 'Etudes' %}
 {% block body %}
     <div class="container">
-       {# {%  if app.user %}
-            <a href="{{ path('logout') }}" class="btn btn-secondary">Se deconnecter</a>
-        {%  endif %}
-        #}
         <div class="jumbotron text-center bg-warning">
             <div class="row d-flex ">
                 <div class="d-flex justify-content-start">
@@ -58,17 +54,9 @@
                     <td>{{ etude.statut }}</td>
                     <td>{{ etude.commentaire | nl2br }}</td>
                 </tr>
-                {#<a style="text-decoration: none" target="_blank"
-                   href="{{ path('admin.produit.index', {id: etude.id}) }}">
-                    <button class="btn btn-sm btn-block btn-outline-secondary">{{ etude.numero }}</button>
-                </a>#}
        {% endfor %}
-
-
             </tbody>
         </table>
-
-
         <div class="row d-flex align-items-end mt-5 ml-1 ">
             <button class="btn btn-light">Tout</button>
             <button class="btn btn-light">Aucun</button>
@@ -77,10 +65,7 @@
             <div class="">
              <a href="{{ path('admin.etude.new') }}" class="btn btn-secondary">Ajouter une nouvelle étude</a>
             </div>
-
         </div>
-
     </div>
-
 {% endblock %}
 

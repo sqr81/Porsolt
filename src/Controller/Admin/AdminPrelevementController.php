@@ -38,7 +38,7 @@ class AdminPrelevementController extends AbstractController
     private $em;
 
 
-
+    /*------presentation des prelevements existants--------*/
     /**
      * @Route("/prelevement/index/{slug}-{id}", name="prelevement.index", requirements={"slug": "[a-z0-9\-]*"})
      * @param string $slug
@@ -55,9 +55,9 @@ class AdminPrelevementController extends AbstractController
                 'slug' => $etude->getSlug()
             ], 301);
         }
-        //renvoi l etude dans l arrow
+//        renvoi l etude dans l arrow
 //        $etude = $produit->getEtude();
-        //
+
         return $this->render('prelevement/index.html.twig', [
 //          'produit' => $produit,
             'etude' => $etude,
@@ -65,7 +65,7 @@ class AdminPrelevementController extends AbstractController
 
         ]);
     }
-
+    /*----------nouveau prelevement------------*/
     /**
      * @Route("/prelevement/index/{slug}-{id}", name="prelevement.index", requirements={"slug": "[a-z0-9\-]*"})
      * @param Request $request
@@ -89,7 +89,8 @@ class AdminPrelevementController extends AbstractController
                 'slug' => $etude->getSlug()
             ], 301);
         }
-//        $etude = $produit->getEtude();
+        //        renvoi l etude dans l arrow
+        //        $etude = $produit->getEtude();
         return $this->render('prelevement/index.html.twig',[
             'prelevement' => $prelevement,
             'prelevements' => $prelevements,
@@ -97,37 +98,5 @@ class AdminPrelevementController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
-//
-//    /**
-//     * @Route("/prelevement/index/{slug}-{id}", name="prelevement.index", requirements={"slug": "[a-z0-9\-]*"})
-//     * @param Request $request
-//     * @param Etude $etude
-//     * @return RedirectResponse|Response
-//     */
-//    public function new(Request $request, Etude $etude): Response
-//    {
-//        $prelevement = new Prelevement();
-//
-//        $form = $this->createForm(PrelevementType::class, $prelevement);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $this->em->persist($prelevement);
-//            $this->em->flush();
-////            $this->session->getFlashBag()->add('success', 'Le pays a bien été enregistré.');
-//        }
-//        $prelevements = $this->repository->findAll();
-////        $etude = $produit->getEtude();
-//        return $this->render('prelevement/index.html.twig', [
-////          'produit' => $produit,
-//            'etude' => $etude,
-//            'prelevements' => $prelevements,
-//        ]);
-////        return $form;
-//    }
-//
-
-
 
 }
